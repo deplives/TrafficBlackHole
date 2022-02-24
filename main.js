@@ -14,7 +14,6 @@ let app = {
     i18n,
     data() {
         return {
-            txt: '123',
             nTask: 4,
             trafficBudget:10,
             infTraffic:true,
@@ -64,7 +63,7 @@ let app = {
             }
             return ((this.logs[nlog - 1].amount - this.logs[0].amount) /
                 (this.logs[nlog - 1].time - this.logs[0].time) * 1000
-            ).toFixed(2) + 'MB/s'
+            ).toFixed(2) + ' MB/s'
         },
         amount() {
             let nlog = this.logs.length
@@ -73,11 +72,11 @@ let app = {
             }
             let amount = this.logs[nlog - 1].amount
             if (amount < 1024) {
-                return amount + 'MB'
+                return amount + ' MB'
             } else if (amount < 1024 ** 2) {
-                return (amount / 1024).toFixed(2) + 'GB'
+                return (amount / 1024).toFixed(2) + ' GB'
             } else {
-                return (amount / 1024 ** 2).toFixed(2) + 'TB'
+                return (amount / 1024 ** 2).toFixed(2) + ' TB'
             }
         },
         duration(){
@@ -97,8 +96,8 @@ let app = {
             let min = Math.floor(duration / 60)
             duration -= min* 60;
             let second = (duration).toFixed(2) + 's'
-            hours = hours === 0 ? '' : hours + 'h'
-            min = min === 0 ? '' : min + 'min'
+            hours = hours === 0 ? '' : hours + 'h '
+            min = min === 0 ? '' : min + 'min '
 
             return hours + min + second
         },
