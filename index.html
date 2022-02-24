@@ -64,7 +64,7 @@
                             <div class="sources">
                                 <li class="dropdown-item" v-for="(source, ind) in sources" :key="source.text+ind"
                                     @click="chooseSource(ind)">
-                                    {{source.text + ' ' + source.size + 'MB'}}
+                                    {{source.text + ' ' + source.size + ' MB'}}
                                 </li>
                             </div>
                             <li>
@@ -81,8 +81,9 @@
                         <div type="text" class="form-control" placeholder="数据源" aria-label="" value="">{{
                             currentSource.text
                             }}</div>
-                        <div type="text" style="flex: 0 0 20%;" class="form-control" placeholder="资源大小"
-                            :value="currentSource&&currentSource.size+'MB'" aria-label="">{{currentSource.size}}MB</div>
+                        <div type="text" style="flex: 0 0 20%;" class="form-control" placeholder="块大小"
+                            :value="currentSource&&currentSource.size+' MB'" aria-label="">{{currentSource.size}}MB
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,7 +148,7 @@
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">{{ $t('message.s13') }}</label>
                                     <input type="text" class="form-control" v-model="holdSourceLink" id="recipient-name"
-                                        placeholder="http(s)://...">
+                                        placeholder="http(s)://">
                                 </div>
                                 <div class="mb-3">
                                     <label for="recipient-name" class="col-form-label">{{ $t('message.s14') }}</label>
