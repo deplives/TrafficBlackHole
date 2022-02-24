@@ -29,7 +29,7 @@ let app = {
             startTime:null,
             stopTime:null,
             now:Date.now(),
-            rulerInitTimeDuration:10000,// 10s
+            rulerInitTimeDuration:10000,
 
             sources:[],
             currentSourceIndex:0,
