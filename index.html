@@ -67,16 +67,6 @@
                                     {{source.text + ' ' + source.size + ' MB'}}
                                 </li>
                             </div>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li style="text-align: right;padding-right: 1rem;">
-                                <!-- <button class="btn btn-outline-secondary" type="button">设置</button> -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo">{{ $t('message.s7')
-                                    }}</button>
-                                <!-- <button type="button" class="btn btn-primary">删除</button> -->
-                            </li>
                         </ul>
                         <div type="text" class="form-control" placeholder="数据源" aria-label="" value="">{{
                             currentSource.text
@@ -87,21 +77,20 @@
                     </div>
                 </div>
             </div>
-            <h4 class="mt-4">{{ $t('message.s8') }}</h4>
+            <h4 class="mt-4">{{ $t('message.s7') }}</h4>
             <div class="status">
-                <span class="lable">{{ $t('message.s17') }}</span><span class="value">{{speed}}</span>
-                <span class="lable">{{ $t('message.s18') }}</span><span class="value">{{amount}}</span>
-                <span class="lable">{{ $t('message.s19') }}</span><span class="value">{{duration}}</span>
+                <span class="lable">{{ $t('message.s10') }}</span><span class="value">{{speed}}</span>
+                <span class="lable">{{ $t('message.s11') }}</span><span class="value">{{amount}}</span>
+                <span class="lable">{{ $t('message.s12') }}</span><span class="value">{{duration}}</span>
             </div>
 
             <!-- control buttons -->
             <div style="text-align: right;" class="mt-4">
-                <button type="button" class="btn btn-primary" :disabled="go" @click="fire">{{ $t('message.s9')
+                <button type="button" class="btn btn-primary" :disabled="go" @click="fire">{{ $t('message.s8')
                     }}</button>
-                <button type="button" class="btn btn-danger" :disabled="!go" @click="term">{{ $t('message.s10')
+                <button type="button" class="btn btn-danger" :disabled="!go" @click="term">{{ $t('message.s9')
                     }}</button>
             </div>
-
 
             <!-- waterfall -->
             <div class="waterfall-wrapper" v-if="startTime !== null">
@@ -117,53 +106,11 @@
                     :class="task.className" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
+
             <!-- hidden iframe -->
             <div class="hidden">
                 <div v-for="task in taskList" :key="task.uid">
                     <iframe :src="'./sandbox.html#' + loactionHash(task)"></iframe>
-                </div>
-            </div>
-
-
-            <!-- Scrollable modal -->
-            <!-- Modal -->
-
-
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">{{ $t('message.s11') }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">{{ $t('message.s12') }}</label>
-                                    <input type="text" class="form-control" id="recipient-name" v-model="holdSourceText"
-                                        placeholder="location, provider etc.">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">{{ $t('message.s13') }}</label>
-                                    <input type="text" class="form-control" v-model="holdSourceLink" id="recipient-name"
-                                        placeholder="http(s)://">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">{{ $t('message.s14') }}</label>
-                                    <input type="text" class="form-control" v-model="holdSourceSize" id="recipient-name"
-                                        placeholder="MB">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ $t('message.s15')
-                                }}</button>
-                            <button type="button" @click="setCustomSource" data-bs-dismiss="modal"
-                                class="btn btn-primary">{{ $t('message.s16') }}</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </form>

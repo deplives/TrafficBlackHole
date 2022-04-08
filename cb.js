@@ -1,6 +1,6 @@
-if(!window.successLoad){
+if (!window.successLoad) {
     console.error('fackback for exception')
-    if(onScriptError){
+    if (onScriptError) {
         setTimeout(() => onScriptError(null, true), 5000)
     }
 }

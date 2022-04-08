@@ -23,6 +23,12 @@ header .lang span:hover {
   cursor: pointer;
   color: #ddd;
 }
+
+.dropdown-menu {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 #app {
   width: 70%;
   min-width: 1140px;

@@ -6,17 +6,17 @@ function simpleUid() {
     )
 }
 const i18n = new VueI18n({
-  locale: 'cn', // 设置地区
-  messages, // 设置地区信息
+    locale: 'cn', // 设置地区
+    messages, // 设置地区信息
 })
 
 let app = {
     i18n,
     data() {
         return {
-            nTask: 4,
-            trafficBudget:10,
-            infTraffic:true,
+            nTask: 1,
+            trafficBudget: 10,
+            infTraffic: true,
 
             go: false,
             taskList: [],
@@ -26,34 +26,34 @@ let app = {
             historyLog: [],
             nHistory: 10,
 
-            startTime:null,
-            stopTime:null,
-            now:Date.now(),
-            rulerInitTimeDuration:10000,
+            startTime: null,
+            stopTime: null,
+            now: Date.now(),
+            rulerInitTimeDuration: 10000,
 
-            sources:[],
-            currentSourceIndex:0,
-            customSource:null,
+            sources: [],
+            currentSourceIndex: 0,
+            customSource: null,
 
-            holdSourceText:null,
-            holdSourceLink:null,
-            holdSourceSize:null
+            holdSourceText: null,
+            holdSourceLink: null,
+            holdSourceSize: null
         }
     },
     computed: {
-        currentSource(){
-            if(this.customSource){
+        currentSource() {
+            if (this.customSource) {
                 return this.customSource
             }
-            if(this.sources.length === 0){
+            if (this.sources.length === 0) {
                 return {
-                    text:'loading',
+                    text: 'loading',
                     size: 0
                 }
             }
             return this.sources[this.currentSourceIndex]
         },
-        sizePerReq(){
+        sizePerReq() {
             return this.currentSource.size; //MB
         },
         speed() {
@@ -79,14 +79,14 @@ let app = {
                 return (amount / 1024 ** 2).toFixed(2) + ' TB'
             }
         },
-        duration(){
-            if(this.startTime === null){
+        duration() {
+            if (this.startTime === null) {
                 return '-'
             }
             let duration
-            if(!this.go){
+            if (!this.go) {
                 duration = this.stopTime - this.startTime
-            }else{
+            } else {
                 duration = this.now - this.startTime
             }
             duration = duration / 1000
@@ -94,7 +94,7 @@ let app = {
             let hours = Math.floor(duration / 3600)
             duration -= hours * 3600;
             let min = Math.floor(duration / 60)
-            duration -= min* 60;
+            duration -= min * 60;
             let second = (duration).toFixed(2) + 's'
             hours = hours === 0 ? '' : hours + 'h '
             min = min === 0 ? '' : min + 'min '
@@ -114,10 +114,10 @@ let app = {
                 v.barStyle = {
                     'margin-left': (v.start - minStart) / (maxStop - minStart) * 100 + '%',
                     'width': ((v.stop || this.now) - v.start) / (maxStop - minStart) * 100 + '%',
-                    'background-color':v.success || !v.stop ? '' : 'red'
+                    'background-color': v.success || !v.stop ? '' : 'red'
                 }
                 v.className = 'progress-bar progress-bar-striped pbar'
-                if(!v.stop){
+                if (!v.stop) {
                     v.className += ' progress-bar-animated'
                 }
             })
@@ -125,43 +125,43 @@ let app = {
         },
         rulerTime() {
             let historyAndCurrentTasks = this.historyAndCurrentTasks;
-            let left  = historyAndCurrentTasks[0].start
+            let left = historyAndCurrentTasks[0].start
             let right = this.go ? this.now : this.stopTime
-                right = Math.max(right, left + this.rulerInitTimeDuration)
+            right = Math.max(right, left + this.rulerInitTimeDuration)
 
             return {
                 left: left - this.startTime,
                 right: right - this.startTime
             }
         },
-        isInvalid(){
+        isInvalid() {
             return this.nTask <= 0 || 0 !== this.nTask - Math.trunc(this.nTask)
         },
-        nTaskElementClass(){
+        nTaskElementClass() {
             return {
-                'input-group':true,
+                'input-group': true,
                 'is-invalid': this.isInvalid
             }
         }
     },
     methods: {
-        chooseSource(currentSourceIndex){
+        chooseSource(currentSourceIndex) {
             this.currentSourceIndex = currentSourceIndex
             this.customSource = null
         },
-        setCustomSource(){
+        setCustomSource() {
             let customSource = {
-                text:this.holdSourceText,
-                link:this.holdSourceLink,
-                size:parseInt(this.holdSourceSize)
+                text: this.holdSourceText,
+                link: this.holdSourceLink,
+                size: parseInt(this.holdSourceSize)
             }
             this.customSource = customSource
         },
-        loactionHash(task){
+        loactionHash(task) {
             let sources = this.currentSource
             return encodeURIComponent(JSON.stringify(({
-                link:sources.link,
-                uid:task.uid
+                link: sources.link,
+                uid: task.uid
             })))
         },
         adjust() {
@@ -173,16 +173,16 @@ let app = {
             }
             if (this.taskList.length > this.nTask) {
                 this.taskList.slice(0, this.taskList.length - this.nTask)
-                .forEach(t => {
-                    this.recordFinished(t.uid)
-                })
+                    .forEach(t => {
+                        this.recordFinished(t.uid)
+                    })
                 return
             }
             while (this.taskList.length < this.nTask) {
                 this.taskList.push({
                     start: this.now,
                     uid: simpleUid(),
-                    stop:null //Stop is null
+                    stop: null //Stop is null
                 })
             }
         },
@@ -190,9 +190,9 @@ let app = {
             this.nTask += diff;
             this.adjust()
         },
-        changeNTask(e){
+        changeNTask(e) {
             let value = parseInt(e.target.value)
-            if(value <= 0){
+            if (value <= 0) {
                 return
             }
             this.nTask = value
@@ -222,14 +222,14 @@ let app = {
             }
         },
         refreshTask() {
-            if(!this.go){
+            if (!this.go) {
                 return
             }
 
             this.now = Date.now()
             let nlog = this.logs.length
             let amount = nlog <= 1 ? 0 : this.logs[nlog - 1].amount
-            if(!this.infTraffic && amount >= this.trafficBudget * 1024){
+            if (!this.infTraffic && amount >= this.trafficBudget * 1024) {
                 this.term();
                 return
             }
@@ -237,11 +237,11 @@ let app = {
                 this.refreshTask()
             }, 200)
         },
-        recordFinished(finishedUid, success){
+        recordFinished(finishedUid, success) {
             let finishedTask = this.taskList.filter(v => v.uid === finishedUid);
-            if(finishedTask.length){
+            if (finishedTask.length) {
                 finishedTask = finishedTask[0]
-            }else{
+            } else {
                 return
             }
             finishedTask.stop = this.now
@@ -256,7 +256,7 @@ let app = {
                 return
             }
 
-            if(e.data.success){
+            if (e.data.success) {
                 let nlog = this.logs.length;
                 this.logs.push({
                     time: Date.now(),
@@ -283,17 +283,17 @@ let app = {
                 this.currentSourceIndex = 0
             })
     },
-    mounted(){
+    mounted() {
         this.$el.style.visibility = 'visible';
     }
 };
 new Vue(app).$mount('#app')
 
-function setLang(e){
+function setLang(e) {
     let lang = e.target.dataset.lang
-    if(lang === 'en'){
+    if (lang === 'en') {
         i18n.locale = 'en'
-    }else if(lang === 'cn'){
+    } else if (lang === 'cn') {
         i18n.locale = 'cn'
     }
 }
